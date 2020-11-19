@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card, CardMedia, CardContent, CardActionArea, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,12 +15,14 @@ const useStyles = makeStyles({
 });
 
 interface IProps {
-    id: string
+    projectId: string
+    workloadId: string
     name: string
     thumbnail: string
+    comment: string
 }
 
-const Project: React.FC<IProps> = ({ id, name, thumbnail }) => {
+const Workload: React.FC<IProps> = ({ projectId, workloadId, name, thumbnail, comment }) => {
     const [image, setImage] = useState(null);
 
     const classes = useStyles();
@@ -31,18 +33,19 @@ const Project: React.FC<IProps> = ({ id, name, thumbnail }) => {
                 setImage(url);
             })
         ;
+
     }, []);
 
     return (
         <React.Fragment>
             <Card className={classes.root}>
-                <Link href="/projects/[projectId]" as={`/projects/${id}`}>
+                <Link href="/projects/[projectId]/workloads/[workloadId]" as={`/projects/${projectId}/workloads/${workloadId}`}>
                     <CardActionArea>
                         {image && (
                             <CardMedia
                                 className={classes.media}
                                 image={image}
-                                title="プロジェクト画像"
+                                title="施工画像"
                             />
                         )}
                         <CardContent>
@@ -57,4 +60,4 @@ const Project: React.FC<IProps> = ({ id, name, thumbnail }) => {
     );
 };
 
-export default Project;
+export default Workload;
