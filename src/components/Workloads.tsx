@@ -1,18 +1,18 @@
 import React, { useEffect, useState} from "react";
 import { db } from "../utils/Firebase";
 import { Grid } from "@material-ui/core";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import Workload from "./Workload";
 
 const Workloads = () => {
     const [workloads, setWorkLoads] = useState([]);
 
     const router = useRouter();
-    const projectId = router.query.projectId.toString();
+    const { projectId } = router.query;
 
     useEffect(() => {
         db.collection('projects')
-            .doc(projectId)
+            .doc(projectId.toString())
             .collection('workloads')
             .get()
             .then(snapshot => {
@@ -32,7 +32,7 @@ const Workloads = () => {
                         <Grid item md={4} sm={6} xs={12} key={workload.id}>
                             <Workload
                                 name={workload.name}
-                                projectId={projectId}
+                                projectId={projectId.toString()}
                                 workloadId={workload.id}
                                 thumbnail={workload.thumbnail}
                                 comment={workload.comment}
