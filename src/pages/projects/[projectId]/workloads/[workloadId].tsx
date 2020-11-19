@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import {Container, Grid, Paper, Typography } from "@material-ui/core";
 import { db, storage } from "../../../../utils/Firebase";
 import Auth from "../../../../components/Auth";
 
@@ -31,14 +32,25 @@ const Show = () => {
 
     return (
         <Auth>
-            施工内容ページ
-            {(workload && image) && (
-                <div>
-                    {workload.name}
-                    {workload.comment}
-                    <img src={image} />
-                </div>
-            )}
+            <Container maxWidth="md">
+                {(workload && image) && (
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Typography variant="h4">
+                                {workload.name}
+                            </Typography>
+                        </Grid>
+                        <Grid item sm={8} xs={12}>
+                            <img src={image} />
+                        </Grid>
+                        <Grid item sm={4} xs={12}>
+                            <Typography variant="body1">
+                                {workload.comment}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                )}
+            </Container>
         </Auth>
     )
 }
