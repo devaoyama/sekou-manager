@@ -1,12 +1,14 @@
 import React from "react";
+import { Container } from "@material-ui/core";
 import Auth from "../components/Auth";
-import SignOut from "../components/SignOut";
+import Projects from "../components/Projects";
 
 const Index: React.FC = () => {
     return (
         <Auth>
-            <h1>施工管理アプリ</h1>
-            <SignOut />
+            <Container maxWidth="md">
+                <Projects />
+            </Container>
         </Auth>
     );
 };
