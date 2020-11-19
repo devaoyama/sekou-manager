@@ -4,22 +4,24 @@ import firebase from "../utils/Firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from "./Alert";
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(13),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
 
-    const classes = makeStyles((theme) => ({
-        paper: {
-            marginTop: theme.spacing(13),
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-        },
-        button: {
-            margin: theme.spacing(3, 0, 2),
-        },
-    }))();
+    const classes = useStyles();
 
     const handleClick = async () => {
         await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -56,7 +58,7 @@ const SignIn = () => {
                 <Button
                     type="button"
                     onClick={handleClick}
-                    className={classes.button}
+                    className={classes.submit}
                     fullWidth
                     variant="contained"
                     color="primary"
