@@ -27,7 +27,7 @@ const Projects = () => {
                 {projects.map(project => {
                     return (
                         <Grid item md={4} sm={6} xs={12} key={project.id}>
-                            <Project name={project.name} id={project.id} />
+                            <Project name={project.name} id={project.id} thumbnail={project.thumbnail} />
                         </Grid>
                     );
                 })}

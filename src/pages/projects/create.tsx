@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { Container, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { db } from "../../utils/Firebase";
+import { db, storage } from "../../utils/Firebase";
 import Auth from "../../components/Auth";
 import { AuthContext } from "../../context/Auth";
 
@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
 const Create = () => {
     const [name, setName] = useState('');
 
+    const [image, setImage] = useState(null);
+
     const { currentUser } = useContext(AuthContext);
 
     const router = useRouter();
@@ -28,7 +30,8 @@ const Create = () => {
     const classes = useStyles();
 
     const handleClick = async () => {
-        await db.collection('projects').add({name, user: currentUser.uid});
+        const snapshot = await storage.ref().child(`/${currentUser.uid}/projects/${image.name}`).put(image);
+        await db.collection('projects').add({name, user: currentUser.uid, thumbnail: snapshot.ref.fullPath});
         await router.push('/');
     };
 
@@ -43,6 +46,10 @@ const Create = () => {
                         onChange={event => setName(event.target.value)}
                         fullWidth
                         margin="normal"
+                    />
+                    <input
+                        type="file"
+                        onChange={event => setImage(event.target.files[0])}
                     />
                     <Button
                         type="button"
