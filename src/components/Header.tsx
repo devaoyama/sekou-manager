@@ -33,7 +33,7 @@ const Header = () => {
                     )}
                 </Toolbar>
             </AppBar>
-            <Box mt={9} />
+            <Box mt={2} />
         </React.Fragment>
     );
 };
