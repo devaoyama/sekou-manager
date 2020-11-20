@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@material-ui/core";
 import firebase from "../utils/Firebase";
 
 const SignOut = () => {
@@ -8,7 +9,7 @@ const SignOut = () => {
 
     return (
         <div>
-            <button onClick={handleClick}>ログアウト</button>
+            <Button color="inherit" onClick={handleClick}>ログアウト</Button>
         </div>
     );
 };

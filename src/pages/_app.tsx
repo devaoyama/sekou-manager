@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import { AuthProvider } from "../context/Auth";
+import Header from "../components/Header";
 
 const MyApp = ({ Component, pageProps }) => {
     useEffect(() => {
@@ -12,6 +13,7 @@ const MyApp = ({ Component, pageProps }) => {
 
     return (
         <AuthProvider>
+            <Header />
             <Component {...pageProps} />
         </AuthProvider>
     );
