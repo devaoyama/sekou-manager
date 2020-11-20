@@ -33,7 +33,7 @@ const Show = () => {
                             <AddIcon />
                         </ListItemIcon>
                         <ListItemText>
-                            プロジェクト追加
+                            施工内容追加
                         </ListItemText>
                     </ListItem>
                 </Link>
