@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card, CardMedia, CardContent, CardActionArea, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { storage } from "../utils/Firebase";
+import Image from "next/image";
 
 const useStyles = makeStyles({
     root: {
@@ -10,7 +11,7 @@ const useStyles = makeStyles({
         margin: 'auto',
     },
     media: {
-        height: 200,
+        maxHeight: 400,
     },
 });
 
@@ -44,9 +45,10 @@ const Workload: React.FC<IProps> = ({ projectId, workloadId, name, thumbnail, co
                         {image && (
                             <CardMedia
                                 className={classes.media}
-                                image={image}
                                 title="施工画像"
-                            />
+                            >
+                                <Image src={image} width={1920} height={1024} />
+                            </CardMedia>
                         )}
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
