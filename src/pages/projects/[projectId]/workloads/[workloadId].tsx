@@ -4,6 +4,13 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardMedia, Container, Typography } from "@material-ui/core";
 import { db, storage } from "../../../../utils/Firebase";
 import Auth from "../../../../components/Auth";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    body: {
+        'white-space': 'pre-wrap',
+    },
+});
 
 const Show = () => {
     const [workload, setWorkload] = useState(null);
@@ -12,6 +19,8 @@ const Show = () => {
 
     const router = useRouter();
     const { projectId, workloadId } = router.query;
+
+    const classes = useStyles();
 
     useEffect(() => {
         if (!projectId || !workloadId) return;
@@ -42,7 +51,7 @@ const Show = () => {
                             <Image src={image} width={1920} height={1024} />
                         </CardMedia>
                         <CardContent>
-                            <Typography variant="body1">
+                            <Typography variant="body1" className={classes.body}>
                                 {workload.comment}
                             </Typography>
                         </CardContent>

@@ -33,13 +33,18 @@ const Create = () => {
     const classes = useStyles();
 
     const handleClick = async () => {
-        const snapshot = await storage.ref().child(`/${currentUser.uid}/workloads/${image.name}`).put(image);
+        const snapshot = await storage
+            .ref()
+            .child(`/${currentUser.uid}/workloads/${projectId.toString()}/${image.name}`)
+            .put(image)
+        ;
         await db.collection('projects')
             .doc(projectId.toString())
             .collection('workloads')
             .add({
                 name, comment, thumbnail: snapshot.ref.fullPath
             })
+        ;
         await router.push('/projects/[projectId]', `/projects/${projectId}`);
     };
 
@@ -62,6 +67,8 @@ const Create = () => {
                         onChange={event => setComment(event.target.value)}
                         fullWidth
                         margin="normal"
+                        multiline
+                        rows={4}
                     />
                     <input
                         type="file"
