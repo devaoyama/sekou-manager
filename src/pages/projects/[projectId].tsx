@@ -7,6 +7,7 @@ import Link from "next/link";
 import { makeStyles } from "@material-ui/core/styles";
 import Auth from "../../components/Auth";
 import Workloads from "../../components/Workloads";
+import DeleteProjectListItem from "../../components/DeleteProjectListItem";
 
 const useStyles = makeStyles((theme) => ({
     fab: {
@@ -37,6 +38,9 @@ const Show = () => {
                         </ListItemText>
                     </ListItem>
                 </Link>
+                <DeleteProjectListItem
+                    projectId={projectId}
+                />
             </List>
         </div>
     );

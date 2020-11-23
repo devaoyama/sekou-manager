@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardMedia, Container, Typography } from "@material-ui/core";
+import { Card, CardContent, CardHeader, CardMedia, Container, Grid, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { db, storage } from "../../../../utils/Firebase";
 import Auth from "../../../../components/Auth";
-import {makeStyles} from "@material-ui/core/styles";
+import DeleteWorkloadButton from "../../../../components/DeleteWorkloadButton";
 
 const useStyles = makeStyles({
     body: {
@@ -43,20 +44,29 @@ const Show = () => {
     return (
         <Auth>
             <Container maxWidth="md">
-                <Typography variant="h4" component="h3">施工内容</Typography>
-                {(workload && image) && (
-                    <Card>
-                        <CardHeader title={workload.name} />
-                        <CardMedia title="施工画像">
-                            <Image src={image} width={1920} height={1024} />
-                        </CardMedia>
-                        <CardContent>
-                            <Typography variant="body1" className={classes.body}>
-                                {workload.comment}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                )}
+                <Grid container justify="space-between">
+                    <Grid>
+                        <Typography variant="h4" component="h3">施工内容</Typography>
+                    </Grid>
+                    {(workload && image) && (
+                        <React.Fragment>
+                            <Grid>
+                                <DeleteWorkloadButton thumbnail={workload.thumbnail} />
+                            </Grid>
+                            <Card>
+                                <CardHeader title={workload.name} />
+                                <CardMedia title="施工画像">
+                                    <Image src={image} width={1920} height={1024} />
+                                </CardMedia>
+                                <CardContent>
+                                    <Typography variant="body1" className={classes.body}>
+                                        {workload.comment}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </React.Fragment>
+                    )}
+                </Grid>
             </Container>
         </Auth>
     );
