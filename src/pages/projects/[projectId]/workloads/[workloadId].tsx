@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { makeStyles } from "@material-ui/core/styles";
-import {Container, Grid, Paper, Typography } from "@material-ui/core";
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardMedia, Container, Typography } from "@material-ui/core";
 import { db, storage } from "../../../../utils/Firebase";
 import Auth from "../../../../components/Auth";
-
-const useStyles = makeStyles({
-    img: {
-        maxWidth: 345
-    }
-})
 
 const Show = () => {
     const [workload, setWorkload] = useState(null);
 
     const [image, setImage] = useState(null);
-
-    const classes = useStyles();
 
     const router = useRouter();
     const { projectId, workloadId } = router.query;
@@ -44,21 +36,17 @@ const Show = () => {
             <Container maxWidth="md">
                 <Typography variant="h4" component="h3">施工内容</Typography>
                 {(workload && image) && (
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography variant="h5">
-                                {workload.name}
-                            </Typography>
-                        </Grid>
-                        <Grid item sm={8} xs={12}>
-                            <img src={image} alt="施工画像" className={classes.img} />
-                        </Grid>
-                        <Grid item sm={4} xs={12}>
+                    <Card>
+                        <CardHeader title={workload.name} />
+                        <CardMedia title="施工画像">
+                            <Image src={image} width={1920} height={1024} />
+                        </CardMedia>
+                        <CardContent>
                             <Typography variant="body1">
                                 {workload.comment}
                             </Typography>
-                        </Grid>
-                    </Grid>
+                        </CardContent>
+                    </Card>
                 )}
             </Container>
         </Auth>
