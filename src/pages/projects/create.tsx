@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { db, storage } from "../../utils/Firebase";
 import Auth from "../../components/Auth";
 import { AuthContext } from "../../context/Auth";
+import { resizeImage } from "../../utils/resizeImage";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -23,14 +24,22 @@ const Create = () => {
 
     const [image, setImage] = useState(null);
 
+    const [imageName, setImageName] = useState(null);
+
     const { currentUser } = useContext(AuthContext);
 
     const router = useRouter();
 
     const classes = useStyles();
 
+    const handleChangeFile = async (e) => {
+        const file = e.target.files[0];
+        setImageName(file.name);
+        setImage(await resizeImage(file));
+    };
+
     const handleClick = async () => {
-        const snapshot = await storage.ref().child(`/${currentUser.uid}/projects/${image.name}`).put(image);
+        const snapshot = await storage.ref().child(`/${currentUser.uid}/projects/${imageName}`).putString(image, 'data_url');
         await db.collection('projects').add({name, user: currentUser.uid, thumbnail: snapshot.ref.fullPath});
         await router.push('/');
     };
@@ -49,7 +58,7 @@ const Create = () => {
                     />
                     <input
                         type="file"
-                        onChange={event => setImage(event.target.files[0])}
+                        onChange={handleChangeFile}
                     />
                     <Button
                         type="button"
