@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { db, storage } from "../../utils/Firebase";
 import Auth from "../../components/Auth";
 import { AuthContext } from "../../context/Auth";
-import { resizeImage } from "../../utils/resizeImage";
+import resizeImage from "../../utils/resizeImage";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -32,14 +32,15 @@ const Create = () => {
 
     const classes = useStyles();
 
-    const handleChangeFile = async (e) => {
+    const handleChangeFile = (e) => {
         const file = e.target.files[0];
         setImageName(file.name);
-        setImage(await resizeImage(file));
+        setImage(file);
     };
 
     const handleClick = async () => {
-        const snapshot = await storage.ref().child(`/${currentUser.uid}/projects/${imageName}`).putString(image, 'data_url');
+        const resizedImage = await resizeImage(image);
+        const snapshot = await storage.ref().child(`/${currentUser.uid}/projects/${imageName}`).put(resizedImage);
         await db.collection('projects').add({name, user: currentUser.uid, thumbnail: snapshot.ref.fullPath});
         await router.push('/');
     };
